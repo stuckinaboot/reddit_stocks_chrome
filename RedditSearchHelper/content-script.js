@@ -1,6 +1,6 @@
 function enrichSearchResults(contextNode = document) {
   const googleSearchLinks = document.evaluate(
-    `//div[contains(@class,"Post")]//h3[not(@rsh-processed)]`,
+    `//div[contains(@class,"Post") and not(@rsh-processed)]`,
     contextNode,
     null,
     XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
@@ -9,6 +9,34 @@ function enrichSearchResults(contextNode = document) {
 
   for (let i = 0; i < googleSearchLinks.snapshotLength; i++) {
     googleSearchLinks.snapshotItem(i).setAttribute("rsh-processed", true);
+    const postHeaderEval = document.evaluate(
+      `.//h3`,
+      googleSearchLinks.snapshotItem(i),
+      null,
+      XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+      null
+    );
+
+    if (postHeaderEval.snapshotLength === 0) {
+      continue;
+    }
+    const postHeader = postHeaderEval.snapshotItem(0);
+    const postHeaderText = postHeader.textContent;
+    console.log(postHeaderText);
+
+    const postContentsEval = document.evaluate(
+      './/div[contains(@class,"RichTextJSON-root")]',
+      googleSearchLinks.snapshotItem(i),
+      null,
+      XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+      null
+    );
+    const postContentsText =
+      postContentsEval.snapshotLength !== 0
+        ? postContentsEval.snapshotItem(0).textContent
+        : "";
+    const combinedText = postHeaderText + ". " + postContentsText;
+
     const params = {
       targetStrike: 105,
       targetExpDate: 1606435200,
@@ -50,9 +78,7 @@ function enrichSearchResults(contextNode = document) {
             response.specificOptionPrice
         );
 
-        googleSearchLinks
-          .snapshotItem(i)
-          .insertAdjacentElement("afterend", redditInfo);
+        postHeader.insertAdjacentElement("afterend", redditInfo);
       }
     );
   }
