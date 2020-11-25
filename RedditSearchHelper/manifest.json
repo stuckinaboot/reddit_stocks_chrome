@@ -1,11 +1,17 @@
 {
   "name": "Reddit Search Helper",
-  "version": "1.1",
-  "description": "Adds data to Google search results for Reddit links, displaying the thread creation date, number of comments and number of upvotes.",
+  "version": "1.0",
+  "description": "Adds stock prices and perecent change to posts on stock-related subreddits",
   "manifest_version": 2,
   "content_scripts": [
     {
-      "matches": ["https://www.reddit.com/r/options*"],
+      "matches": [
+        "https://www.reddit.com/r/options*",
+        "https://www.reddit.com/r/stocks*",
+        "https://www.reddit.com/r/investing*",
+        "https://www.reddit.com/r/thetagang*",
+        "https://www.reddit.com/r/WallStreetBets*"
+      ],
       "js": ["content-script.js"],
       "css": ["styles.css"]
     }
@@ -13,10 +19,7 @@
   "icons": {
     "128": "icon_128.png"
   },
-  "permissions": [
-    "https://www.reddit.com/r/*/comments",
-    "https://query1.finance.yahoo.com/*"
-  ],
+  "permissions": ["https://query1.finance.yahoo.com/*"],
   "background": {
     "scripts": ["background.js"],
     "persistent": false
