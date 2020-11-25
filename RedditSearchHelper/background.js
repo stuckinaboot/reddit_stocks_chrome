@@ -26,9 +26,9 @@ async function getSpecificStock(params) {
     const finalTickers = Array.from(noDupTickersSet);
 
     return {
-      results: await Promise.all(
-        finalTickers
-          .map(async (ticker) => {
+      results: (
+        await Promise.all(
+          finalTickers.map(async (ticker) => {
             try {
               const optionsRes = await fetch(
                 `https://query1.finance.yahoo.com/v7/finance/options/${ticker}`
@@ -53,8 +53,7 @@ async function getSpecificStock(params) {
               return {
                 ticker,
                 marketPrice,
-                previousClose:
-                  Math.round(regularMarketPreviousClose * 100) / 100,
+                previousClose: regularMarketPreviousClose,
               };
             } catch (error) {
               // Gracefully return null if error occurred
@@ -62,8 +61,8 @@ async function getSpecificStock(params) {
               return null;
             }
           })
-          .filter((res) => res != null)
-      ),
+        )
+      ).filter((res) => res != null),
     };
   } catch (error) {
     return { error };

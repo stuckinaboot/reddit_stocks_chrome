@@ -48,34 +48,39 @@ function enrichSearchResults(contextNode = document) {
           return;
         }
         const { results } = response;
+
+        const redditInfo = document.createElement("div");
+        redditInfo.setAttribute("class", "rsh-wrapper");
+        function addText(text, ticker) {
+          const textElement = document.createElement("a");
+
+          // Open link in new window on click
+          textElement.setAttribute(
+            "href",
+            "https://finance.yahoo.com/quote/" + ticker
+          );
+          textElement.setAttribute("target", "_blank");
+          textElement.textContent = text;
+          textElement.setAttribute("class", "rsh-text");
+          redditInfo.append(textElement);
+        }
+
         results.forEach((result) => {
           const { ticker, marketPrice, previousClose } = result;
-          const redditInfo = document.createElement("div");
-          redditInfo.setAttribute("class", "rsh-wrapper");
 
-          function addText(text) {
-            const textElement = document.createElement("a");
+          // Convert decimal to percent (* 10000) and round to two decimal places
+          // (/ 100)
+          const percentChange =
+            Math.round(
+              ((marketPrice - previousClose) / previousClose) * 10000
+            ) / 100;
 
-            // Open link in new window on click
-            textElement.setAttribute(
-              "href",
-              "https://finance.yahoo.com/quote/" + ticker
-            );
-            textElement.setAttribute("target", "_blank");
-            textElement.textContent = text;
-            textElement.setAttribute("class", "rsh-text");
-            redditInfo.append(textElement);
-          }
-
-          const percentChange = Math.round(
-            ((marketPrice - previousClose) / previousClose) * 100
-          );
-          const txt = `💵${ticker}: $${marketPrice} ${
+          const txt = `${
             percentChange > 0 ? "📈" : "📉"
-          }${percentChange}%`;
-          addText(txt);
-          postHeader.insertAdjacentElement("afterend", redditInfo);
+          }${ticker}: $${marketPrice}, ${percentChange}%`;
+          addText(txt, ticker);
         });
+        postHeader.insertAdjacentElement("afterend", redditInfo);
       }
     );
   }
