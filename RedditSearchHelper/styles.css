@@ -1,6 +1,7 @@
 .rsh-icon {
   width: 20px;
-  filter: invert(46%) sepia(36%) saturate(7468%) hue-rotate(360deg) brightness(103%) contrast(107%);
+  filter: invert(46%) sepia(36%) saturate(7468%) hue-rotate(360deg)
+    brightness(103%) contrast(107%);
   margin-right: 5px;
 }
 
