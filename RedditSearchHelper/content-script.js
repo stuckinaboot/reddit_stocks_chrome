@@ -1,5 +1,5 @@
 function enrichSearchResults(contextNode = document) {
-  const googleSearchLinks = document.evaluate(
+  const redditPostLinks = document.evaluate(
     `//div[contains(@class,"Post") and not(@rsh-processed)]`,
     contextNode,
     null,
@@ -7,11 +7,11 @@ function enrichSearchResults(contextNode = document) {
     null
   );
 
-  for (let i = 0; i < googleSearchLinks.snapshotLength; i++) {
-    googleSearchLinks.snapshotItem(i).setAttribute("rsh-processed", true);
+  for (let i = 0; i < redditPostLinks.snapshotLength; i++) {
+    redditPostLinks.snapshotItem(i).setAttribute("rsh-processed", true);
     const postHeaderEval = document.evaluate(
       `.//h3`,
-      googleSearchLinks.snapshotItem(i),
+      redditPostLinks.snapshotItem(i),
       null,
       XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
       null
@@ -25,7 +25,7 @@ function enrichSearchResults(contextNode = document) {
 
     const postContentsEval = document.evaluate(
       ".//p",
-      googleSearchLinks.snapshotItem(i),
+      redditPostLinks.snapshotItem(i),
       null,
       XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
       null
@@ -88,11 +88,11 @@ function enrichSearchResults(contextNode = document) {
 
 enrichSearchResults();
 
-let observer = new MutationObserver(function (mutations) {
+let observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     const targetNodeName = mutation.target.nodeName;
     if (targetNodeName === "DIV" || targetNodeName === "div") {
-      for (let addedNode of mutation.addedNodes) {
+      for (const addedNode of mutation.addedNodes) {
         enrichSearchResults(addedNode);
       }
     }

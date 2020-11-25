@@ -1,8 +1,14 @@
-// Constants
+/*
+ * Constants
+ */
 
+// These "tickers" are not really tickers so they should
+// be removed
 const tickersToFilter = ["PUT", "CALL", "ITM", "OTM"];
 
-// Listener
+/**
+ * Listener
+ */
 
 chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
   if (request.contentScriptQuery === "fetchStock") {
@@ -11,7 +17,9 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
   return true;
 });
 
-// Helper functions
+/*
+ * Helper functions
+ */
 
 async function getSpecificStock(params) {
   try {
@@ -44,6 +52,7 @@ async function getSpecificStock(params) {
                 ask == null ||
                 regularMarketPreviousClose == null
               ) {
+                // Fail gracefully if we are missing a key metric
                 return null;
               }
 
@@ -62,7 +71,9 @@ async function getSpecificStock(params) {
             }
           })
         )
-      ).filter((res) => res != null),
+      )
+        // Remove all null results
+        .filter((res) => res != null),
     };
   } catch (error) {
     return { error };
