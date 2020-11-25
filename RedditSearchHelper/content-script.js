@@ -35,58 +35,47 @@ function enrichSearchResults(contextNode = document) {
       postContentsText += postContentsEval.snapshotItem(i).textContent + ". ";
     }
 
-    function extractParams(txt) {
-      const tickers = txt.match(/\b([A-Z]{4}|[A-Z]{3})\b/g);
-      const callCheck = txt.match(/call[s]\b/gi);
-      const putCheck = txt.match(/put[s]\b/gi);
-    }
-
     const combinedText = postHeaderText + ". " + postContentsText;
+    const tickers = combinedText.match(/\b([A-Z]{4}|[A-Z]{3})\b/g);
 
-    console.log(combinedText);
-
-    const params = {
-      targetStrike: 105,
-      targetExpDate: 1606435200,
-      ticker: "AAPL",
-      targetOptionType: "calls",
-    };
     chrome.runtime.sendMessage(
       {
-        contentScriptQuery: "fetchOption",
-        ...params,
+        contentScriptQuery: "fetchStock",
+        tickers,
       },
       (response) => {
         if (response.error) {
           return;
         }
-        var redditInfo = document.createElement("div");
-        redditInfo.setAttribute("class", "rsh-wrapper");
+        const { results } = response;
+        results.forEach((result) => {
+          const { ticker, marketPrice, previousClose } = result;
+          const redditInfo = document.createElement("div");
+          redditInfo.setAttribute("class", "rsh-wrapper");
 
-        function addIconAndText(icon, text) {
-          const textElement = document.createElement("a");
+          function addText(text) {
+            const textElement = document.createElement("a");
 
-          // Open link in new window on click
-          textElement.setAttribute(
-            "href",
-            "https://finance.yahoo.com/quote/" + params.ticker
+            // Open link in new window on click
+            textElement.setAttribute(
+              "href",
+              "https://finance.yahoo.com/quote/" + ticker
+            );
+            textElement.setAttribute("target", "_blank");
+            textElement.textContent = text;
+            textElement.setAttribute("class", "rsh-text");
+            redditInfo.append(textElement);
+          }
+
+          const percentChange = Math.round(
+            ((marketPrice - previousClose) / previousClose) * 100
           );
-          textElement.setAttribute("target", "_blank");
-          textElement.textContent = icon + text;
-          textElement.setAttribute("class", "rsh-text");
-          redditInfo.append(textElement);
-        }
-
-        addIconAndText("📈", params.ticker + ": $" + response.marketPrice);
-        addIconAndText(
-          "💵",
-          "2020-03-18 $" +
-            params.targetStrike +
-            "c: $" +
-            response.specificOptionPrice
-        );
-
-        postHeader.insertAdjacentElement("afterend", redditInfo);
+          const txt = `💵${ticker}: $${marketPrice} ${
+            percentChange > 0 ? "📈" : "📉"
+          }${percentChange}%`;
+          addText(txt);
+          postHeader.insertAdjacentElement("afterend", redditInfo);
+        });
       }
     );
   }
