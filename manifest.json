@@ -10,7 +10,7 @@
         "https://www.reddit.com/r/stocks*",
         "https://www.reddit.com/r/investing*",
         "https://www.reddit.com/r/thetagang*",
-        "https://www.reddit.com/r/WallStreetBets*"
+        "https://www.reddit.com/r/wallstreetbets*"
       ],
       "js": ["content-script.js"],
       "css": ["styles.css"]
