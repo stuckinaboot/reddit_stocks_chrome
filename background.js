@@ -2,9 +2,19 @@
  * Constants
  */
 
-// These "tickers" are not really tickers so they should
-// be removed
-const tickersToFilter = ["PUT", "CALL", "ITM", "OTM", "EST", "IPO"];
+// These "tickers" are usually not really tickers so they should
+// be removed. Even if some of them are, if they are generally
+// used in a non-ticker sense, its a better UX to just filter them
+const tickersToFilter = [
+  "PUT",
+  "CALL",
+  "ITM",
+  "OTM",
+  "EST",
+  "IPO",
+  "CEO",
+  "COO",
+];
 
 /**
  * Listener
