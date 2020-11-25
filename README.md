@@ -17,9 +17,11 @@ Locally:
 3. Enable Developer Mode by clicking the toggle switch next to Developer mode.
 4. Click the LOAD UNPACKED button and select the extension directory.
 
-## Release History
+## Donate
 
-- 1.0.0
+This Chrome extension was built and will be supported in my spare time. If you like it, please consider donating:
+
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="stuckinaboot" data-color="#FFDD00" data-emoji="📈" data-font="Poppins" data-text="Donate a stonk" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
 
 ## Contributing
 
