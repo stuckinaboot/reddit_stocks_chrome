@@ -4,7 +4,7 @@
 
 // These "tickers" are not really tickers so they should
 // be removed
-const tickersToFilter = ["PUT", "CALL", "ITM", "OTM"];
+const tickersToFilter = ["PUT", "CALL", "ITM", "OTM", "EST", "IPO"];
 
 /**
  * Listener
