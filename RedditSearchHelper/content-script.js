@@ -34,12 +34,15 @@ function enrichSearchResults(contextNode = document) {
     for (let i = 0; i < postContentsEval.snapshotLength; i++) {
       postContentsText += postContentsEval.snapshotItem(i).textContent + ". ";
     }
-    // console.log(postContentsEval.singleNodeValue);
-    // const postContentsText =
-    //   postContentsEval.snapshotLength !== 0
-    //     ? postContentsEval.snapshotItem(0).textContent
-    //     : "";
+
+    function extractParams(txt) {
+      const tickers = txt.match(/\b([A-Z]{4}|[A-Z]{3})\b/g);
+      const callCheck = txt.match(/call[s]\b/gi);
+      const putCheck = txt.match(/put[s]\b/gi);
+    }
+
     const combinedText = postHeaderText + ". " + postContentsText;
+
     console.log(combinedText);
 
     const params = {
