@@ -2,7 +2,7 @@
   "name": "Reddit Stocks",
   "version": "1.0",
   "description": "Adds stock prices and percent change to posts on stock-related subreddits",
-  "manifest_version": 1,
+  "manifest_version": 2,
   "content_scripts": [
     {
       "matches": [
