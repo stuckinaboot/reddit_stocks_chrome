@@ -17,7 +17,8 @@
     }
   ],
   "icons": {
-    "128": "icon_128.png"
+    "48": "icon_48.jpeg",
+    "128": "icon_128.jpeg"
   },
   "permissions": ["https://query1.finance.yahoo.com/*"],
   "background": {
