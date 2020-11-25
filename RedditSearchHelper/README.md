@@ -38,9 +38,9 @@ Once your Pull Request is accepted, I'll add you as a contributor.
 
 [@stuckinaboot](https://github.com/stuckinaboot)
 
-### Credit for Project Start
+### Credit for Boilerplate
 
-The overwhelming majority of this was built by [@filahf](https://www.filipahfelt.se/), and can be seen on his youtube sync website https://wevid.online/. I (@stuckinaboot) just simplified the code to make using this within an iframe trivial. Some core youtube sync ideas were used from [@YasserYka](https://github.com/YasserYka/YT-API).
+Boilerplate code for this project was taken from https://github.com/built-by-as/RedditSearchHelper
 
 ## Meta
 
