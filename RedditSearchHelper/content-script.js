@@ -34,25 +34,32 @@ function enrichSearchResults(contextNode = document) {
         var redditInfo = document.createElement("div");
         redditInfo.setAttribute("class", "rsh-wrapper");
 
-        function addIconAndText(iconPath, text) {
-          var icon = document.createElement("img");
-          icon.setAttribute("class", "rsh-icon");
-          icon.setAttribute("src", chrome.extension.getURL(iconPath));
-          redditInfo.append(icon);
-          let textElement = document.createElement("span");
-          textElement.textContent = text;
+        function addIconAndText(icon, text) {
+          // var icon = document.createElement("img");
+          // icon.setAttribute("class", "rsh-icon");
+          // icon.setAttribute("src", chrome.extension.getURL(iconPath));
+          // redditInfo.append(icon);
+          let textElement = document.createElement("a");
+
+          // Open link in new window on click
+          textElement.setAttribute(
+            "href",
+            "https://finance.yahoo.com/quote/" + params.ticker
+          );
+          textElement.setAttribute("target", "_blank");
+          textElement.textContent = icon + text;
           textElement.setAttribute("class", "rsh-text");
           redditInfo.append(textElement);
         }
 
-        addIconAndText("assets/calendar_icon.png", response.date);
+        // addIconAndText("assets/calendar_icon.png", response.date);
+        addIconAndText("📈", params.ticker + ": $" + response.marketPrice);
         addIconAndText(
-          "assets/upvote_arrow.png",
-          "Option Price: " + response.specificOptionPrice
-        );
-        addIconAndText(
-          "assets/comment_icon.png",
-          "Market Price: " + response.marketPrice
+          "💵",
+          "2020-03-18 $" +
+            params.targetStrike +
+            "c: $" +
+            response.specificOptionPrice
         );
 
         googleSearchLinks
