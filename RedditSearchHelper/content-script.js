@@ -22,20 +22,25 @@ function enrichSearchResults(contextNode = document) {
     }
     const postHeader = postHeaderEval.snapshotItem(0);
     const postHeaderText = postHeader.textContent;
-    console.log(postHeaderText);
 
     const postContentsEval = document.evaluate(
-      './/div[contains(@class,"RichTextJSON-root")]',
+      ".//p",
       googleSearchLinks.snapshotItem(i),
       null,
       XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
       null
     );
-    const postContentsText =
-      postContentsEval.snapshotLength !== 0
-        ? postContentsEval.snapshotItem(0).textContent
-        : "";
+    let postContentsText = "";
+    for (let i = 0; i < postContentsEval.snapshotLength; i++) {
+      postContentsText += postContentsEval.snapshotItem(i).textContent + ". ";
+    }
+    // console.log(postContentsEval.singleNodeValue);
+    // const postContentsText =
+    //   postContentsEval.snapshotLength !== 0
+    //     ? postContentsEval.snapshotItem(0).textContent
+    //     : "";
     const combinedText = postHeaderText + ". " + postContentsText;
+    console.log(combinedText);
 
     const params = {
       targetStrike: 105,
