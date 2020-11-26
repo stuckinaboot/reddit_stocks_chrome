@@ -91,6 +91,7 @@ async function getSpecificStock(params) {
   }
 }
 
+// This is currently unused but this could be useful in the future
 async function getSpecificOption(params) {
   try {
     const { targetStrike, targetExpDate, ticker, targetOptionType } = params;
