@@ -8,7 +8,7 @@ founds in reddit posts
 ## Installation
 
 Chrome Web Store:
-https://chrome.google.com/webstore/detail/reddit-search-helper/laladmlmbneplheiajfdpcephiehoifh
+https://chrome.google.com/webstore/detail/reddit-stocks/iopnmknglkghokbjkmokaljefoanpjba
 
 Locally:
 
