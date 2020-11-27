@@ -16,6 +16,8 @@ const tickersToFilter = [
   "COO",
   "DTE",
   "BUY",
+  "LEAP",
+  "PUMP",
 ];
 
 /**
