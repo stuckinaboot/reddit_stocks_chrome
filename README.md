@@ -28,7 +28,7 @@ This Chrome extension was built and will be supported in my spare time. If you l
 Any and all contributions are welcome, and I'll be sure to review them as soon as possible.
 Follow these steps to get started contributing:
 
-1. Fork it (<https://github.com/stuckinaboot/reddit_options_chrome/fork>)
+1. Fork it (<https://github.com/stuckinaboot/reddit_stocks_chrome/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
