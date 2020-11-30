@@ -1,4 +1,29 @@
+const SUBREDDIT_INDICATOR = "/r/";
+
+const SUPPORTED_SUBREDDITS = new Set([
+  "options",
+  "stocks",
+  "investing",
+  "thetagang",
+  "wallstreetbets",
+]);
+
+function isSupportedSubreddit() {
+  const url = location.href;
+  const subredditStartIndex = url.indexOf(SUBREDDIT_INDICATOR);
+  if (subredditNameStartIndex === -1) {
+    return false;
+  }
+  const subredditName = url.substring(
+    subredditStartIndex + SUBREDDIT_INDICATOR.length
+  );
+  return SUPPORTED_SUBREDDITS.has(subredditName);
+}
+
 function enrichSearchResults(contextNode = document) {
+  if (!isSupportedSubreddit()) {
+    return;
+  }
   const redditPostLinks = document.evaluate(
     `//div[contains(@class,"Post") and not(@rsh-processed)]`,
     contextNode,

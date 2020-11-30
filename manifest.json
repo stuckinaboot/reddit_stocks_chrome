@@ -6,6 +6,7 @@
   "content_scripts": [
     {
       "matches": [
+        "https://www.reddit.com/",
         "https://www.reddit.com/r/options*",
         "https://www.reddit.com/r/stocks*",
         "https://www.reddit.com/r/investing*",
