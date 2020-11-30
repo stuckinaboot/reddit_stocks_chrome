@@ -11,12 +11,23 @@ const SUPPORTED_SUBREDDITS = new Set([
 function isSupportedSubreddit() {
   const url = location.href;
   const subredditStartIndex = url.indexOf(SUBREDDIT_INDICATOR);
-  if (subredditNameStartIndex === -1) {
+  if (subredditStartIndex === -1) {
     return false;
   }
-  const subredditName = url.substring(
-    subredditStartIndex + SUBREDDIT_INDICATOR.length
-  );
+
+  const subredditNameStartIndex =
+    subredditStartIndex + SUBREDDIT_INDICATOR.length;
+
+  // Search for trailing slash (e.g. / at end of https://www.reddit.com/r/wallstreetbets/)
+  // to know the subreddit name end index
+  const subredditNameEndIndex = url.indexOf("/", subredditNameStartIndex);
+  const subredditName = url
+    .substring(
+      subredditNameStartIndex,
+      // Only include trailing slash index if trailing slash was found
+      subredditNameEndIndex !== -1 ? subredditNameEndIndex : undefined
+    )
+    .toLowerCase();
   return SUPPORTED_SUBREDDITS.has(subredditName);
 }
 
