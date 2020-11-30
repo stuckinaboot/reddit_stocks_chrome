@@ -18,6 +18,7 @@ const tickersToFilter = [
   "BUY",
   "LEAP",
   "PUMP",
+  "API",
 ];
 
 /**

@@ -1,4 +1,40 @@
+const SUBREDDIT_INDICATOR = "/r/";
+
+const SUPPORTED_SUBREDDITS = new Set([
+  "options",
+  "stocks",
+  "investing",
+  "thetagang",
+  "wallstreetbets",
+]);
+
+function isSupportedSubreddit() {
+  const url = location.href;
+  const subredditStartIndex = url.indexOf(SUBREDDIT_INDICATOR);
+  if (subredditStartIndex === -1) {
+    return false;
+  }
+
+  const subredditNameStartIndex =
+    subredditStartIndex + SUBREDDIT_INDICATOR.length;
+
+  // Search for trailing slash (e.g. / at end of https://www.reddit.com/r/wallstreetbets/)
+  // to know the subreddit name end index
+  const subredditNameEndIndex = url.indexOf("/", subredditNameStartIndex);
+  const subredditName = url
+    .substring(
+      subredditNameStartIndex,
+      // Only include trailing slash index if trailing slash was found
+      subredditNameEndIndex !== -1 ? subredditNameEndIndex : undefined
+    )
+    .toLowerCase();
+  return SUPPORTED_SUBREDDITS.has(subredditName);
+}
+
 function enrichSearchResults(contextNode = document) {
+  if (!isSupportedSubreddit()) {
+    return;
+  }
   const redditPostLinks = document.evaluate(
     `//div[contains(@class,"Post") and not(@rsh-processed)]`,
     contextNode,
