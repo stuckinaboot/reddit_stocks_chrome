@@ -6,6 +6,7 @@ const SUPPORTED_SUBREDDITS = new Set([
   "investing",
   "thetagang",
   "wallstreetbets",
+  "pennystocks",
 ]);
 
 function isSupportedSubreddit() {

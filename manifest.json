@@ -11,7 +11,8 @@
         "https://www.reddit.com/r/stocks*",
         "https://www.reddit.com/r/investing*",
         "https://www.reddit.com/r/thetagang*",
-        "https://www.reddit.com/r/wallstreetbets*"
+        "https://www.reddit.com/r/wallstreetbets*",
+        "https://www.reddit.com/r/pennystocks*"
       ],
       "js": ["content-script.js"],
       "css": ["styles.css"]
