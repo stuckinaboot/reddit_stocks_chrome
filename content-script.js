@@ -37,20 +37,19 @@ function enrichSearchResults(contextNode = document) {
     return;
   }
   const redditPostLinks = document.evaluate(
-    `//div[contains(@class,"Post") and not(@rsh-processed)]`,
+    `//div[contains(@class, 'Post') or contains(@class, 'entry') and not(@rsh-processed)]`,
     contextNode,
     null,
     XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
     null
   );
-
   for (let i = 0; i < redditPostLinks.snapshotLength; i++) {
     redditPostLinks.snapshotItem(i).setAttribute("rsh-processed", true);
     const postHeaderEval = document.evaluate(
       // Selects h1 or h3 headers since
       // h1 is used on specific posts (ex. https://www.reddit.com/r/options/comments/k0xcdz/slack_in_talks_to_be_bought_by_salesforce_crm/)
       // and h3 is used on the subreddit main page (ex. https://www.reddit.com/r/options/)
-      `.//*[self::h1 or self::h3]`,
+      `.//*[self::h1 or self::h3 or self::a[contains(@class, 'title')]]`,
       redditPostLinks.snapshotItem(i),
       null,
       XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
