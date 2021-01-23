@@ -61,22 +61,37 @@ async function getSpecificStock(params) {
               const result = optionsResJson.optionChain.result[0];
 
               const { quote } = result;
-              const { bid, ask, regularMarketPreviousClose } = quote;
+              const {
+                bid,
+                ask,
+                regularMarketPreviousClose,
+                regularMarketPrice,
+              } = quote;
               if (
                 bid == null ||
                 ask == null ||
-                regularMarketPreviousClose == null
+                regularMarketPreviousClose == null ||
+                regularMarketPrice == null
               ) {
                 // Fail gracefully if we are missing a key metric
                 return null;
               }
 
+              // Use bid-ask market price if defined, otherwise use regularMarketPrice
+              // which may be slightly outdated (but works when bid and ask = 0 over the weekend)
+              const marketPrice =
+                bid > 0 && ask > 0 ? (bid + ask) / 2 : regularMarketPrice;
+
               // https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
-              const marketPrice = Math.round(((bid + ask) / 2) * 100) / 100;
+              let roundedMarketPrice = Math.round(marketPrice * 100) / 100;
+              if (roundedMarketPrice < 0.5) {
+                // Likely a penny stock so try rounding to 4 decimals instead
+                roundedMarketPrice = Math.round(marketPrice * 10000) / 10000;
+              }
 
               return {
                 ticker,
-                marketPrice,
+                marketPrice: roundedMarketPrice,
                 previousClose: regularMarketPreviousClose,
               };
             } catch (error) {
