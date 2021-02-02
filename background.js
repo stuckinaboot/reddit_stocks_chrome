@@ -19,6 +19,11 @@ const tickersToFilter = [
   "LEAP",
   "PUMP",
   "API",
+  "YOLO",
+  "DD",
+  "SEC",
+  "MOON",
+  "MARS",
 ];
 
 /**
